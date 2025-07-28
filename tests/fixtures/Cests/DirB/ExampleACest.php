@@ -2,13 +2,13 @@
 
 namespace Tests\Codeception\Task\fixtures\Cests\DirB;
 
+use Codeception\Attribute\Group;
+
 class ExampleACest
 {
-    /**
-     * @group foo
-     * @group bar
-     * @group example
-     */
+    #[Group('foo')]
+    #[Group('bar')]
+    #[Group('example')]
     public function testExampleGoFrom(): void
     {
         // nothing
