@@ -7,6 +7,8 @@ namespace Tests\Codeception\Task\Splitter;
 use Codeception\Task\Splitter\SplitTestsByTimeTask;
 use Codeception\Task\Splitter\TestsSplitterTrait;
 use Consolidation\Log\Logger;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Finder\Finder;
@@ -14,17 +16,13 @@ use const Tests\Codeception\Task\TEST_PATH;
 
 /**
  * Class SplitTestsByTimeTaskTest
- *
- * @coversDefaultClass \Codeception\Task\Splitter\SplitTestsByTimeTask
  */
+#[CoversClass(SplitTestsByTimeTask::class)]
 final class SplitTestsByTimeTaskTest extends TestCase
 {
     use TestsSplitterTrait;
 
-    /**
-     * @testdox splitting the tests by execution time
-     * @covers ::run
-     */
+    #[TestDox('splitting the tests by execution time')]
     public function testRun(): void
     {
         $expectedGroupContent = [

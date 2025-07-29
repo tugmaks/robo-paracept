@@ -6,10 +6,12 @@ namespace Tests\Codeception\Task\Merger;
 
 use Codeception\Task\Merger\FailedTestsMergerTask;
 use Consolidation\Log\Logger;
+use PHPUnit\Framework\Attributes\CoversFunction;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\NullOutput;
 use const Tests\Codeception\Task\TEST_PATH;
 
+#[CoversFunction('run')]
 final class FailedTestsMergerTaskTest extends TestCase
 {
     /**
@@ -72,9 +74,6 @@ final class FailedTestsMergerTaskTest extends TestCase
         }
     }
 
-    /**
-     * @covers ::run
-     */
     public function testRunSingleFile(): void
     {
         $tmpDir = sys_get_temp_dir() . '/foz/';

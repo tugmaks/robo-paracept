@@ -2,22 +2,19 @@
 
 namespace Tests\Codeception\Task\fixtures\DependencyResolutionExampleTests\DirB;
 
+use Codeception\Attribute\Group;
 use PHPUnit\Framework\TestCase;
 
 class Example3Test extends TestCase
 {
 
-    /**
-     * @group example
-     */
+    #[Group('example')]
     public function testF()
     {
         self::assertTrue(true);
     }
 
-    /**
-     * @group example
-     */
+    #[Group('example')]
     public function testG()
     {
         self::assertTrue(true);

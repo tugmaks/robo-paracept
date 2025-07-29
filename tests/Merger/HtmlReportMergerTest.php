@@ -9,15 +9,14 @@ use Consolidation\Log\Logger;
 use DOMDocument;
 use DOMNodeList;
 use DOMXPath;
+use PHPUnit\Framework\Attributes\CoversFunction;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\NullOutput;
 use const Tests\Codeception\Task\TEST_PATH;
 
+#[CoversFunction('run')]
 final class HtmlReportMergerTest extends TestCase
 {
-    /**
-     * @covers ::run
-     */
     public function testRun(): void
     {
         $expectedTimeInSeconds = 234.98;
@@ -63,9 +62,6 @@ final class HtmlReportMergerTest extends TestCase
         $this->assertSame($expectedTimeInSeconds, (float)$matches['timesum']);
     }
 
-    /**
-     * @covers ::run
-     */
     public function testRunWithCodeception5Reports(): void
     {
         $expectedTimeInSeconds = '03:34.98';
@@ -111,9 +107,6 @@ final class HtmlReportMergerTest extends TestCase
         $this->assertSame($expectedTimeInSeconds, (string)$matches['timesum']);
     }
 
-    /**
-     * @covers ::run
-     */
     public function testRunMaxTimeReports(): void
     {
         $expectedTime = '129.25';
@@ -163,9 +156,6 @@ final class HtmlReportMergerTest extends TestCase
         $this->assertSame($expectedTime, max($executionTime));
     }
 
-    /**
-     * @covers ::run
-     */
     public function testRunMaxTimeWithCodeception5Reports(): void
     {
         $expectedTime = '02:09.25';

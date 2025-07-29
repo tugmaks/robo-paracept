@@ -7,6 +7,8 @@ namespace Tests\Codeception\Task\Splitter;
 use Codeception\Task\Splitter\TestsSplitterTask;
 use Codeception\Task\Splitter\TestsSplitterTrait;
 use Consolidation\Log\Logger;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Robo\Exception\TaskException;
 use Symfony\Component\Console\Output\NullOutput;
@@ -15,9 +17,8 @@ use const Tests\Codeception\Task\TEST_PATH;
 
 /**
  * Class TestsSplitterTaskTest
- *
- * @coversDefaultClass \Codeception\Task\Splitter\TestsSplitterTask
  */
+#[CoversClass(TestsSplitterTask::class)]
 final class TestsSplitterTaskTest extends TestCase
 {
     use TestsSplitterTrait;
@@ -34,13 +35,13 @@ final class TestsSplitterTaskTest extends TestCase
             ->willReturn(false);
 
         $this->expectException(TaskException::class);
-        $this->expectErrorMessage(
+        $this->expectExceptionMessage(
             'This task requires Codeception to be loaded. Please require autoload.php of Codeception'
         );
         $service->run();
     }
 
-    public function providerTestLoadTestsWithDifferentPatterns(): array
+    public static function providerTestLoadTestsWithDifferentPatterns(): array
     {
         return [
             'Cests' => [
@@ -70,10 +71,7 @@ final class TestsSplitterTaskTest extends TestCase
         ];
     }
 
-    /**
-     * @covers ::run
-     * @dataProvider providerTestLoadTestsWithDifferentPatterns
-     */
+    #[DataProvider('providerTestLoadTestsWithDifferentPatterns')]
     public function testLoadTests(
         string $type,
         int $groups,

@@ -7,6 +7,8 @@ namespace Tests\Codeception\Task\Splitter;
 use Codeception\Task\Splitter\TestFileSplitterTask;
 use Codeception\Task\Splitter\TestsSplitterTrait;
 use Consolidation\Log\Logger;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Finder\Finder;
@@ -14,53 +16,49 @@ use const Tests\Codeception\Task\TEST_PATH;
 
 /**
  * Class TestFileSplitterTaskTest
- *
- * @coversDefaultClass \Codeception\Task\Splitter\TestFileSplitterTask
  */
+#[CoversClass(TestFileSplitterTask::class)]
 final class TestFileSplitterTaskTest extends TestCase
 {
     use TestsSplitterTrait;
 
-    public function providerTestFilesCanBeSplit(): array
+    public static function providerTestFilesCanBeSplit(): array
     {
         return [
             [
                 'groups' => 1,
                 'from' => 'tests/fixtures/DependencyResolutionExampleTests/',
-                'to' => TEST_PATH . '/result/group_',
+                'groupTo' => TEST_PATH . '/result/group_',
                 'expected' => 1,
             ],
             [
                 'groups' => 2,
                 'from' => 'tests/fixtures/DependencyResolutionExampleTests/',
-                'to' => TEST_PATH . '/result/group_',
+                'groupTo' => TEST_PATH . '/result/group_',
                 'expected' => 2,
             ],
             [
                 'groups' => 3,
                 'from' => 'tests/fixtures/DependencyResolutionExampleTests/',
-                'to' => TEST_PATH . '/result/group_',
+                'groupTo' => TEST_PATH . '/result/group_',
                 'expected' => 3,
             ],
             [
                 'groups' => 4,
                 'from' => 'tests/fixtures/DependencyResolutionExampleTests/',
-                'to' => TEST_PATH . '/result/group_',
+                'groupTo' => TEST_PATH . '/result/group_',
                 'expected' => 3,
             ],
             [
                 'groups' => 4,
                 'from' => 'tests/fixtures/DependencyResolutionExampleTests',
-                'to' => TEST_PATH . '/result/group_',
+                'groupTo' => TEST_PATH . '/result/group_',
                 'expected' => 4,
             ],
         ];
     }
 
-    /**
-     * @covers ::run
-     * @dataProvider providerTestFilesCanBeSplit
-     */
+    #[DataProvider('providerTestFilesCanBeSplit')]
     public function testFilesCanBeSplitted(
         int $groups,
         string $from,
@@ -80,9 +78,6 @@ final class TestFileSplitterTaskTest extends TestCase
         $this->assertFileDoesNotExist($groupTo . ($expected + 1));
     }
 
-    /**
-     * @covers ::run
-     */
     public function testPatternNotFound(): void
     {
         $task = new TestFileSplitterTask(2);
